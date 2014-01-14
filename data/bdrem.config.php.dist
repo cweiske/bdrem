@@ -1,0 +1,5 @@
+<?php
+$source = array('Bdf', '/path/to/birthday.bdf');
+$daysBefore = 3;
+$daysAfter = 14;
+?>
