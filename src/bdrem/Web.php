@@ -1,26 +1,22 @@
 <?php
 namespace bdrem;
 
-class Web
+class Web extends UserInterface
 {
-    public function run()
-    {
-        $cfg = new Config();
-        $cfg->load();
-        setlocale(LC_TIME, $cfg->locale);
-        $source = $cfg->loadSource();
-
-        $arEvents = $source->getEvents(
-            date('Y-m-d'), $cfg->daysBefore, $cfg->daysAfter
-        );
-        usort($arEvents, '\\bdrem\\Event::compare');
-        $this->render($arEvents);
-    }
-
-    public function render($arEvents)
+    protected function render($arEvents)
     {
         $r = new Renderer_Html();
         echo $r->render($arEvents);
+    }
+
+    protected function loadParameters($cfg)
+    {
+        if (isset($_GET['daysBefore'])) {
+            $cfg->daysBefore = (int) $_GET['daysBefore'];
+        }
+        if (isset($_GET['daysAfter'])) {
+            $cfg->daysAfter = (int) $_GET['daysAfter'];
+        }
     }
 }
 ?>

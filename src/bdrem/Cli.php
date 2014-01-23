@@ -1,23 +1,32 @@
 <?php
 namespace bdrem;
 
-class Cli
+class Cli extends UserInterface
 {
-    public function run()
+    protected function loadParameters($cfg)
     {
-        $cfg = new Config();
-        $cfg->load();
-        setlocale(LC_TIME, $cfg->locale);
-        $source = $cfg->loadSource();
+        $params = $GLOBALS['argv'];
+        array_shift($params);
+        $storeInto = null;
+        foreach ($params as $param) {
+            if ($storeInto !== null) {
+                $cfg->$storeInto = (int)$param;
+                $storeInto = null;
+                continue;
+            }
 
-        $arEvents = $source->getEvents(
-            date('Y-m-d'), $cfg->daysBefore, $cfg->daysAfter
-        );
-        usort($arEvents, '\\bdrem\\Event::compare');
-        $this->render($arEvents);
+            if ($param == '--days-after' || $param == '-a') {
+                $storeInto = 'daysAfter';
+                continue;
+            } else if ($param == '--days-before' || $param == '-b') {
+                $storeInto = 'daysBefore';
+                continue;
+            }
+            $storeInto = null;
+        }
     }
 
-    public function render($arEvents)
+    protected function render($arEvents)
     {
         $r = new Renderer_Console();
         echo $r->render($arEvents);
