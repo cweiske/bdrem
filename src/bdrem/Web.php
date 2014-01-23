@@ -1,7 +1,7 @@
 <?php
 namespace bdrem;
 
-class Cli
+class Web
 {
     public function run()
     {
@@ -15,7 +15,7 @@ class Cli
         );
         usort($arEvents, '\\bdrem\\Event::compare');
 
-        $r = new Renderer_Console();
+        $r = new Renderer_Html();
         echo $r->render($arEvents);
     }
 }

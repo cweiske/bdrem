@@ -5,35 +5,30 @@ class Renderer_Console
 {
     public function render($arEvents)
     {
-        $s  = "Days Age Name                                     Event                Date\n";
-        $s .= "---- --- ---------------------------------------- -------------------- ----------\n";
+        $tbl = new \Console_Table(
+            CONSOLE_TABLE_ALIGN_LEFT,
+            array('sect' => '', 'rule' => '-', 'vert' => '')
+        );
+        $tbl->setAlign(0, CONSOLE_TABLE_ALIGN_RIGHT);
+        $tbl->setAlign(1, CONSOLE_TABLE_ALIGN_RIGHT);
+
+        $tbl->setHeaders(
+            array('Days', 'Age', 'Name', 'Event', 'Date', 'Day')
+        );
+
         foreach ($arEvents as $event) {
-            $s .= sprintf(
-                "%3d %4s %s %s %s\n",
-                $event->days,
-                $event->age,
-                $this->str_pad($event->title, 40),
-                $this->str_pad($event->type, 20),
-                $event->date
+            $tbl->addRow(
+                array(
+                    $event->days,
+                    $event->age,
+                    wordwrap($event->title, 30, "\n", true),
+                    wordwrap($event->type, 20, "\n", true),
+                    $event->date,
+                    strftime('%a', strtotime($event->localDate))
+                )
             );
         }
-        return $s;
-    }
-
-    public function str_pad(
-        $input, $pad_length, $pad_string = ' ', $pad_type = STR_PAD_RIGHT
-    ) {
-        $l = mb_strlen($input, 'utf-8');
-        if ($l >= $pad_length) {
-            return $input;
-        }
-
-        $p = str_repeat($pad_string, $pad_length - $l);
-        if ($pad_type == STR_PAD_RIGHT) {
-            return $input . $p;
-        } else {
-            return $p . $input;
-        }
+        return $tbl->getTable();
     }
 }
 ?>

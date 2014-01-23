@@ -6,6 +6,7 @@ class Config
     public $source;
     public $daysBefore;
     public $daysAfter;
+    public $locale;
 
     public function load()
     {
@@ -23,6 +24,9 @@ class Config
         $this->source = $source;
         $this->daysBefore = $daysBefore;
         $this->daysAfter = $daysAfter;
+        if (isset($locale)) {
+            $this->locale = $locale;
+        }
     }
 
     public function loadSource()
@@ -35,9 +39,6 @@ class Config
         $class = '\\bdrem\\Source_' . array_shift($settings);
 
         return new $class($settings[0]);
-        //$rm = new \ReflectionMethod($class, '__construct');
-        //return $rm->invokeArgs(null, $settings);
-        //return call_user_func_array($class . '::__construct', $settings);
     }
 }
 ?>

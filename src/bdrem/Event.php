@@ -22,6 +22,22 @@ class Event
     public $date;
 
     /**
+     * Reference date against which $age and $days are calculated
+     * (often today)
+     *
+     * @var string YYYY-MM-DD
+     */
+    public $refDate;
+
+    /**
+     * "Localized" $date used for calculations against $refDate.
+     * Month and day are the same as in $date, year is near $refDate's year.
+     *
+     * @var string YYYY-MM-DD
+     */
+    public $localDate;
+
+    /**
      * Which repetition this is
      *
      * @var integer
@@ -52,10 +68,12 @@ class Event
      */
     public function isWithin($strDate, $nDaysBefore, $nDaysAfter)
     {
+        $this->refDate = $strDate;
         list($rYear, $rMonth, $rDay) = explode('-', $strDate);
         list($eYear, $eMonth, $eDay) = explode('-', $this->date);
 
         if ($rMonth == $eMonth && $rDay == $eDay) {
+            $this->localDate = $strDate;
             $this->days = 0;
             if ($eYear == '????') {
                 $this->age = null;
@@ -72,8 +90,9 @@ class Event
             $yearOffset = -1;
         }
 
+        $this->localDate = ($rYear + $yearOffset) . '-' . $eMonth . '-' . $eDay;
         $rD = new \DateTime($strDate);
-        $eD = new \DateTime(($rYear + $yearOffset) . '-' . $eMonth . '-' . $eDay);
+        $eD = new \DateTime($this->localDate);
 
         $nDiff = (int) $rD->diff($eD)->format('%r%a');
 
