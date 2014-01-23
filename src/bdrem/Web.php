@@ -14,7 +14,11 @@ class Web
             date('Y-m-d'), $cfg->daysBefore, $cfg->daysAfter
         );
         usort($arEvents, '\\bdrem\\Event::compare');
+        $this->render($arEvents);
+    }
 
+    public function render($arEvents)
+    {
         $r = new Renderer_Html();
         echo $r->render($arEvents);
     }
