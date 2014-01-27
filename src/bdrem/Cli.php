@@ -29,6 +29,7 @@ class Cli extends UserInterface
     protected function render($arEvents)
     {
         $r = new Renderer_Console();
+        $r->ansi = true;
         echo $r->render($arEvents);
     }
 }

@@ -8,7 +8,7 @@ class Renderer_Console
      *
      * @var boolean
      */
-    public $ansi = true;
+    public $ansi = false;
 
     /**
      * @var \Console_Color2
