@@ -7,6 +7,7 @@ class WebText extends Web
     {
         header('Content-type: text/plain; charset=utf-8');
         $r = new Renderer_Console();
+        $r->ansi = false;
         echo $r->render($arEvents);
     }
 }
