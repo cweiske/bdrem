@@ -9,13 +9,13 @@ class Web extends UserInterface
         echo $r->render($arEvents);
     }
 
-    protected function loadParameters($cfg)
+    protected function loadParameters()
     {
         if (isset($_GET['daysBefore'])) {
-            $cfg->daysBefore = (int) $_GET['daysBefore'];
+            $this->config->daysBefore = (int) $_GET['daysBefore'];
         }
         if (isset($_GET['daysAfter'])) {
-            $cfg->daysAfter = (int) $_GET['daysAfter'];
+            $this->config->daysAfter = (int) $_GET['daysAfter'];
         }
     }
 }

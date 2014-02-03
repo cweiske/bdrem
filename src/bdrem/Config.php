@@ -4,6 +4,7 @@ namespace bdrem;
 class Config
 {
     public $source;
+    public $date;
     public $daysBefore;
     public $daysAfter;
     public $locale;
@@ -21,11 +22,9 @@ class Config
     protected function loadFile($filename)
     {
         include $filename;
-        $this->source = $source;
-        $this->daysBefore = $daysBefore;
-        $this->daysAfter = $daysAfter;
-        if (isset($locale)) {
-            $this->locale = $locale;
+        $vars = get_defined_vars();
+        foreach ($vars as $k => $value) {
+            $this->$k = $value;
         }
     }
 
@@ -39,6 +38,14 @@ class Config
         $class = '\\bdrem\\Source_' . array_shift($settings);
 
         return new $class($settings[0]);
+    }
+
+    public function get($varname, $default = '')
+    {
+        if (!isset($this->$varname) || $this->$varname == '') {
+            return $default;
+        }
+        return $this->$varname;
     }
 }
 ?>

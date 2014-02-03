@@ -3,22 +3,26 @@ namespace bdrem;
 
 abstract class UserInterface
 {
+    protected $config;
+
     public function run()
     {
-        $cfg = new Config();
-        $cfg->load();
-        setlocale(LC_TIME, $cfg->locale);
-        $source = $cfg->loadSource();
+        $this->config = new Config();
+        $this->config->load();
+        $this->config->date = date('Y-m-d');
+        setlocale(LC_TIME, $this->config->locale);
+        $source = $this->config->loadSource();
 
-        $this->loadParameters($cfg);
+        $this->loadParameters($this->config);
         $arEvents = $source->getEvents(
-            date('Y-m-d'), $cfg->daysBefore, $cfg->daysAfter
+            $this->config->date,
+            $this->config->daysBefore, $this->config->daysAfter
         );
         usort($arEvents, '\\bdrem\\Event::compare');
         $this->render($arEvents);
     }
 
-    protected function loadParameters($cfg)
+    protected function loadParameters()
     {
     }
 

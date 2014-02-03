@@ -3,14 +3,14 @@ namespace bdrem;
 
 class Cli extends UserInterface
 {
-    protected function loadParameters($cfg)
+    protected function loadParameters()
     {
         $params = $GLOBALS['argv'];
         array_shift($params);
         $storeInto = null;
         foreach ($params as $param) {
             if ($storeInto !== null) {
-                $cfg->$storeInto = (int)$param;
+                $this->config->$storeInto = (int)$param;
                 $storeInto = null;
                 continue;
             }
@@ -28,7 +28,8 @@ class Cli extends UserInterface
 
     protected function render($arEvents)
     {
-        $r = new Renderer_Console();
+        $r = new Renderer_Mail();
+        $r->config = $this->config;
         $r->ansi = true;
         echo $r->render($arEvents);
     }
