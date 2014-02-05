@@ -1,8 +1,10 @@
 <?php
 namespace bdrem;
 
-class Renderer_HtmlTable
+class Renderer_HtmlTable extends Renderer
 {
+    protected $httpContentType = 'text/html; charset=utf-8';
+
     public function render($arEvents)
     {
         $s = <<<HTM

@@ -3,11 +3,13 @@ namespace bdrem;
 
 class WebText extends Web
 {
-    protected function render($arEvents)
+    protected function loadParameters()
     {
-        header('Content-type: text/plain; charset=utf-8');
-        $r = new Renderer_Console();
-        echo $r->render($arEvents);
+        $parser = parent::loadParameters();
+        //set default renderer to console
+        $parser->options['renderer']->default = 'console';
+
+        return $parser;
     }
 }
 ?>

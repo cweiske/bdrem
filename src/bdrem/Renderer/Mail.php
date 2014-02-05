@@ -3,7 +3,7 @@ namespace bdrem;
 
 require_once 'Mail/mime.php';
 
-class Renderer_Mail
+class Renderer_Mail extends Renderer
 {
     public function render($arEvents)
     {

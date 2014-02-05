@@ -3,20 +3,18 @@ namespace bdrem;
 
 class Web extends UserInterface
 {
-    protected function render($arEvents)
-    {
-        $r = new Renderer_Html();
-        echo $r->render($arEvents);
-    }
-
     protected function loadParameters()
     {
-        if (isset($_GET['daysBefore'])) {
-            $this->config->daysBefore = (int) $_GET['daysBefore'];
-        }
-        if (isset($_GET['daysAfter'])) {
-            $this->config->daysAfter = (int) $_GET['daysAfter'];
-        }
+        $parser = parent::loadParameters();
+        //set default renderer to html
+        $parser->options['renderer']->default = 'html';
+
+        return $parser;
+    }
+
+    protected function preRenderParameterError()
+    {
+        header('Content-type: text/plain; charset=utf-8');
     }
 }
 ?>

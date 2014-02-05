@@ -1,8 +1,10 @@
 <?php
 namespace bdrem;
 
-class Renderer_Console
+class Renderer_Console extends Renderer
 {
+    protected $httpContentType = 'text/plain; charset=utf-8';
+
     /**
      * Use ANSI color codes for output coloring
      *
@@ -17,6 +19,7 @@ class Renderer_Console
 
     public function render($arEvents)
     {
+        $this->loadConfig();
         if ($this->ansi) {
             $this->cc = new \Console_Color2();
         }
@@ -79,6 +82,13 @@ class Renderer_Console
             );
         }
         return $data;
+    }
+
+    protected function loadConfig()
+    {
+        if (isset($this->config->ansi)) {
+            $this->ansi = $this->config->ansi;
+        }
     }
 }
 ?>
