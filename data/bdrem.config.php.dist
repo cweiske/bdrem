@@ -1,5 +1,27 @@
 <?php
+//source: birthday file
 $source = array('Bdf', '/path/to/birthday.bdf');
+
+//Source: SQL database
+$source = array(
+    'Sql',
+    array(
+        'dsn' => 'mysql:dbname=bdrem;host=127.0.0.1',
+        'user' => 'FIXME',
+        'password' => 'FIXME',
+        'table' => 'contacts',
+        'fields' => array(
+            'date' => array(
+                //column name => event title
+                'c_birthday' => 'Birthday'
+            ),
+            //column with name
+            'name' => 'c_name'
+        )
+    )
+);
+
+
 $daysBefore = 3;
 $daysAfter = 14;
 $locale = 'de_DE.UTF-8';
