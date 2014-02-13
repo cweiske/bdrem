@@ -26,13 +26,22 @@ class Source_Sql
      */
     public function getEvents($strDate, $nDaysPrevious, $nDaysNext)
     {
-        $dbh = new \PDO($this->dsn, $this->user, $this->password);
+        $dbh = new \PDO(
+            $this->dsn, $this->user, $this->password,
+            array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION)
+        );
         $arDays = $this->getDates($strDate, $nDaysPrevious, $nDaysNext);
         $arEvents = array();
 
         foreach ($this->fields['date'] as $field => $typeName) {
-            $sqlMonth = 'EXTRACT(MONTH FROM ' . $field . ')';
-            $sqlDay = 'EXTRACT(DAY FROM ' . $field . ')';
+            if (substr($this->dsn, 0, 5) == 'dblib') {
+                //MS SQL Server does of course cook its own sht
+                $sqlMonth = 'DATEPART(month, ' . $field . ')';
+                $sqlDay = 'DATEPART(day, ' . $field . ')';
+            } else {
+                $sqlMonth = 'EXTRACT(MONTH FROM ' . $field . ')';
+                $sqlDay = 'EXTRACT(DAY FROM ' . $field . ')';
+            }
 
             $parts = array();
             foreach ($arDays as $month => $days) {
@@ -45,24 +54,26 @@ class Source_Sql
                     . ')';
             }
             $sql = 'SELECT ' . $field . ' AS e_date'
-                . ', ' . $this->fields['name'] . ' AS e_name'
+                . ', ' . implode(', ', (array) $this->fields['name'])
                 . ' FROM ' . $this->table
                 . ' WHERE '
                 . implode(' OR ', $parts);
 
             $res = $dbh->query($sql);
-            if ($res === false) {
-                $errorInfo = $dbh->errorInfo();
-                throw new \Exception(
-                    'SQL error #' . $errorInfo[0]
-                    . ': ' . $errorInfo[1]
-                    . ': ' . $errorInfo[2],
-                    (int) $errorInfo[1]
-                );
-            }
             while ($row = $res->fetchObject()) {
+                $arNameData = array();
+                foreach ((array) $this->fields['name'] as $fieldName) {
+                    $arNameData[] = $row->$fieldName;
+                }
+                $name = call_user_func_array(
+                    'sprintf',
+                    array_merge(
+                        array($this->fields['nameFormat']),
+                        $arNameData
+                    )
+                );
                 $event = new Event(
-                    $row->e_name, $typeName, 
+                    $name, $typeName,
                     str_replace('0000', '????', $row->e_date)
                 );
                 if ($event->isWithin($strDate, $nDaysPrevious, $nDaysNext)) {
@@ -72,7 +83,7 @@ class Source_Sql
         }
         return $arEvents;
     }
-    
+
     /**
      * @return array Key is the month, value an array of days
      */
