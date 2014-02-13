@@ -18,7 +18,7 @@ abstract class UserInterface
 
         $arEvents = $source->getEvents(
             $this->config->date,
-            $this->config->daysBefore, $this->config->daysAfter
+            $this->config->daysPrev, $this->config->daysNext
         );
         usort($arEvents, '\\bdrem\\Event::compare');
         $this->render($arEvents);
@@ -31,10 +31,10 @@ abstract class UserInterface
         $parser->version = '0.1.0';
 
         $parser->addOption(
-            'daysAfter',
+            'daysNext',
             array(
-                'short_name'  => '-a',
-                'long_name'   => '--days-after',
+                'short_name'  => '-n',
+                'long_name'   => '--days-next',
                 'description' => 'Show NUM days after date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
@@ -42,10 +42,10 @@ abstract class UserInterface
             )
         );
         $parser->addOption(
-            'daysBefore',
+            'daysPrev',
             array(
-                'short_name'  => '-b',
-                'long_name'   => '--days-before',
+                'short_name'  => '-p',
+                'long_name'   => '--previous',
                 'description' => 'Show NUM days before date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
@@ -86,10 +86,10 @@ abstract class UserInterface
         try {
             $result = $parser->parse();
             // do something with the result object
-            $this->config->daysAfter  = $result->options['daysAfter'];
-            $this->config->daysBefore = $result->options['daysBefore'];
-            $this->config->renderer   = $result->options['renderer'];
-            $this->config->quiet      = $result->options['quiet'];
+            $this->config->daysNext = $result->options['daysNext'];
+            $this->config->daysPrev = $result->options['daysPrev'];
+            $this->config->renderer = $result->options['renderer'];
+            $this->config->quiet    = $result->options['quiet'];
         } catch (\Exception $exc) {
             $this->preRenderParameterError();
             $parser->displayError($exc->getMessage());

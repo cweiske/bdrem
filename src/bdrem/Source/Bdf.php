@@ -21,7 +21,7 @@ class Source_Bdf
     /**
      * @param string $strDate Date the events shall be found for, YYYY-MM-DD
      */
-    public function getEvents($strDate, $nDaysBefore, $nDaysAfter)
+    public function getEvents($strDate, $nDaysPrev, $nDaysNext)
     {
         $x = simplexml_load_file($this->filename);
 
@@ -38,7 +38,7 @@ class Source_Bdf
                 (string) $xPerson->event,
                 $date
             );
-            if ($event->isWithin($strDate, $nDaysBefore, $nDaysAfter)) {
+            if ($event->isWithin($strDate, $nDaysPrev, $nDaysNext)) {
                 $arEvents[] = $event;
             }
         }

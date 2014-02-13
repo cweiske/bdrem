@@ -66,7 +66,7 @@ class Event
      *
      * @return boolean True if the event's date is within the given range
      */
-    public function isWithin($strDate, $nDaysBefore, $nDaysAfter)
+    public function isWithin($strDate, $nDaysPrev, $nDaysNext)
     {
         $this->refDate = $strDate;
         list($rYear, $rMonth, $rDay) = explode('-', $strDate);
@@ -104,9 +104,9 @@ class Event
         }
 
         if ($nDiff > 0) {
-            return $nDiff <= $nDaysAfter;
+            return $nDiff <= $nDaysNext;
         } else {
-            return -$nDiff <= $nDaysBefore;
+            return -$nDiff <= $nDaysPrev;
         }
 
         return false;
