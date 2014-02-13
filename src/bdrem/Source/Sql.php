@@ -24,22 +24,25 @@ class Source_Sql
     /**
      * @param string $strDate Date the events shall be found for, YYYY-MM-DD
      */
-    public function getEvents($strDate, $nDaysBefore, $nDaysAfter)
+    public function getEvents($strDate, $nDaysPrevious, $nDaysNext)
     {
         $dbh = new \PDO($this->dsn, $this->user, $this->password);
-        $arDays = $this->getDates($strDate, $nDaysBefore, $nDaysAfter);
+        $arDays = $this->getDates($strDate, $nDaysPrevious, $nDaysNext);
         $arEvents = array();
 
         foreach ($this->fields['date'] as $field => $typeName) {
-            $fieldSql = 'CONCAT('
-                . 'EXTRACT(MONTH FROM ' . $field . '),'
-                . '"-",'
-                . 'EXTRACT(DAY FROM ' . $field . ')'
-                . ') = ';
+            $sqlMonth = 'EXTRACT(MONTH FROM ' . $field . ')';
+            $sqlDay = 'EXTRACT(DAY FROM ' . $field . ')';
 
             $parts = array();
-            foreach ($arDays as $day) {
-                $parts[] = $fieldSql . $dbh->quote($day);
+            foreach ($arDays as $month => $days) {
+                $parts[] = '('
+                    . $sqlMonth . ' = ' . $dbh->quote($month, \PDO::PARAM_INT)
+                    . ' AND ' . $sqlDay . ' >= '
+                    . $dbh->quote(min($days), \PDO::PARAM_INT)
+                    . ' AND ' . $sqlDay . ' <= '
+                    . $dbh->quote(max($days), \PDO::PARAM_INT)
+                    . ')';
             }
             $sql = 'SELECT ' . $field . ' AS e_date'
                 . ', ' . $this->fields['name'] . ' AS e_name'
@@ -62,22 +65,25 @@ class Source_Sql
                     $row->e_name, $typeName, 
                     str_replace('0000', '????', $row->e_date)
                 );
-                if ($event->isWithin($strDate, $nDaysBefore, $nDaysAfter)) {
+                if ($event->isWithin($strDate, $nDaysPrevious, $nDaysNext)) {
                     $arEvents[] = $event;
                 }
             }
         }
         return $arEvents;
     }
-
-    protected function getDates($strDate, $nDaysBefore, $nDaysAfter)
+    
+    /**
+     * @return array Key is the month, value an array of days
+     */
+    protected function getDates($strDate, $nDaysPrevious, $nDaysNext)
     {
-        $ts = strtotime($strDate) - 86400 * $nDaysBefore;
-        $numDays = $nDaysBefore + $nDaysAfter;
+        $ts = strtotime($strDate) - 86400 * $nDaysPrevious;
+        $numDays = $nDaysPrevious + $nDaysNext;
 
         $arDays = array();
         do {
-            $arDays[] = date('n-j', $ts);
+            $arDays[(int) date('n', $ts)][] = (int) date('j', $ts);
             $ts += 86400;
         } while (--$numDays >= 0);
         return $arDays;
