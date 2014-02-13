@@ -1,11 +1,26 @@
 *********************************
 bdrem - Birthday reminder by mail
 *********************************
-Birthday reminder that sends out mails (Text and HTML).
+Birthday reminder that sends out e-mails.
 
-It can also generate tables on your console/shell output and
-normal HTML pages.
+It can also generate ASCII tables on your console/shell and normal HTML pages.
 
+
+========
+Features
+========
+
+Data sources
+============
+- Any SQL database
+- An LDAP server
+- Birthday reminder files (``.bdf``)
+
+Output formats
+==============
+- ASCII table
+- HTML
+- Email (text + HTML parts)
 
 
 =============
@@ -34,6 +49,19 @@ Restart Apache afterwards.
 Use ``dblib`` in the DSN::
 
     dblib:host=192.168.1.1;dbname=Databasename
+
+
+============
+Dependencies
+============
+- PHP 5.3 or higher
+- PDO
+- PEAR packages:
+  - Console_CommandLine
+  - Mail
+  - Mail_mime
+  - Console_Table
+  - Net_LDAP2
 
 
 =======

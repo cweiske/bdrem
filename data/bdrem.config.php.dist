@@ -23,6 +23,18 @@ $source = array(
     )
 );
 
+//Source: LDAP
+$source = array(
+    'Ldap',
+    array(
+        'host'   => 'ldap.example.org',
+        'basedn' => 'ou=adressbuch,dc=example,dc=org',
+        'binddn' => 'cn=FIXME,ou=users,dc=example,dc=org',
+        'bindpw' => 'FIXME'
+    )
+);
+
+
 $daysPrev = 3;
 $daysNext = 14;
 $locale = 'de_DE.UTF-8';
