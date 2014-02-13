@@ -7,21 +7,27 @@ abstract class UserInterface
 
     public function run()
     {
-        $this->config = new Config();
-        $this->config->load();
-        $this->config->date = date('Y-m-d');
-        setlocale(LC_TIME, $this->config->locale);
-        $source = $this->config->loadSource();
+        try {
+            $this->config = new Config();
+            $this->config->load();
+            $this->config->date = date('Y-m-d');
+            setlocale(LC_TIME, $this->config->locale);
+            $source = $this->config->loadSource();
 
-        $parser = $this->loadParameters();
-        $this->parseParameters($parser);
+            $parser = $this->loadParameters();
+            $this->parseParameters($parser);
 
-        $arEvents = $source->getEvents(
-            $this->config->date,
-            $this->config->daysPrev, $this->config->daysNext
-        );
-        usort($arEvents, '\\bdrem\\Event::compare');
-        $this->render($arEvents);
+            $arEvents = $source->getEvents(
+                $this->config->date,
+                $this->config->daysPrev, $this->config->daysNext
+            );
+            usort($arEvents, '\\bdrem\\Event::compare');
+            $this->render($arEvents);
+        } catch (\Exception $e) {
+            $this->preRenderParameterError();
+            echo 'Exception: ' . $e->getCode() . ' ' . $e->getMessage() . "\n";
+            exit(1);
+        }
     }
 
     protected function loadParameters()
