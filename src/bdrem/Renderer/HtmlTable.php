@@ -43,8 +43,8 @@ HTM;
                 . "</tr>\n",
                 $event->days,
                 $event->age,
-                $event->title,
-                $event->type,
+                htmlspecialchars($event->title),
+                htmlspecialchars($event->type),
                 $event->date,
                 strftime('%a', strtotime($event->localDate))
             );
