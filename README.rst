@@ -57,6 +57,7 @@ Dependencies
 - PHP 5.3 or higher
 - PDO
 - PEAR packages:
+
   - Console_CommandLine
   - Mail
   - Mail_mime
