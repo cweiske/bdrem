@@ -38,7 +38,7 @@ abstract class UserInterface
                 'description' => 'Show NUM days after date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
-                'default'     => $this->config->daysAfter,
+                'default'     => $this->config->daysNext,
             )
         );
         $parser->addOption(
@@ -49,7 +49,7 @@ abstract class UserInterface
                 'description' => 'Show NUM days before date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
-                'default'     => $this->config->daysBefore,
+                'default'     => $this->config->daysPrev,
             )
         );
         $parser->addOption(

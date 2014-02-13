@@ -15,14 +15,19 @@ $source = array(
                 //column name => event title
                 'c_birthday' => 'Birthday'
             ),
-            //column with name
-            'name' => 'c_name'
+            //column with name, or array with column names
+            'name' => array('c_name'),
+            //sprintf-compatible name formatting instruction
+            'nameFormat' => '%s',
         )
     )
 );
 
-
-$daysBefore = 3;
-$daysAfter = 14;
+$daysPrev = 3;
+$daysNext = 14;
 $locale = 'de_DE.UTF-8';
+
+//email settings
+$mail_from = 'birthday@example.org';
+$mail_to = array('a@example.org', 'b@example.org');
 ?>

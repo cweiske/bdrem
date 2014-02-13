@@ -5,8 +5,8 @@ class Config
 {
     public $source;
     public $date;
-    public $daysBefore;
-    public $daysAfter;
+    public $daysPrev;
+    public $daysNext;
     public $locale;
 
     public function load()
