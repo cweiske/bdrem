@@ -53,7 +53,11 @@ class Source_Ldap
                 $filters[] = \Net_LDAP2_Filter::create($dateAttribute, 'ends', $day);
             }
 
-            $filter  = \Net_LDAP2_Filter::combine('or', $filters);
+            if (count($filters) < 2) {
+                $filter = $filters[0];
+            } else {
+                $filter = \Net_LDAP2_Filter::combine('or', $filters);
+            }
             $options = array(
                 'scope'      => 'sub',
                 'attributes' => array(
