@@ -5,6 +5,11 @@ class Renderer_Html extends Renderer
 {
     protected $httpContentType = 'application/xhtml+xml; charset=utf-8';
 
+    public function handleStopOnEmpty()
+    {
+        header('HTTP/1.0 204 No Content');
+    }
+
     public function render($arEvents)
     {
         $tr = new Renderer_HtmlTable();

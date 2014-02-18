@@ -13,6 +13,10 @@ abstract class Renderer
         echo $this->render($arEvents);
     }
 
+    public function handleStopOnEmpty()
+    {
+    }
+
     abstract public function render($arEvents);
 }
 ?>

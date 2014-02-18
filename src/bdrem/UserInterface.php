@@ -10,7 +10,6 @@ abstract class UserInterface
         try {
             $this->config = new Config();
             $this->config->load();
-            $this->config->date = date('Y-m-d');
             setlocale(LC_TIME, $this->config->locale);
             $source = $this->config->loadSource();
 
@@ -76,6 +75,25 @@ abstract class UserInterface
             )
         );
         $parser->addOption(
+            'stopOnEmpty',
+            array(
+                'short_name'  => '-e',
+                'long_name'   => '--stoponempty',
+                'description' => 'Output nothing when list is empty',
+                'action'      => 'StoreTrue',
+                'default'     => false
+            )
+        );
+        $parser->addOption(
+            'date',
+            array(
+                'short_name'  => '-d',
+                'long_name'   => '--date',
+                'description' => 'Date to show events for',
+                'action'      => 'StoreString'
+            )
+        );
+        $parser->addOption(
             'quiet',
             array(
                 'short_name'  => '-q',
@@ -92,10 +110,12 @@ abstract class UserInterface
         try {
             $result = $parser->parse();
             // do something with the result object
-            $this->config->daysNext = $result->options['daysNext'];
-            $this->config->daysPrev = $result->options['daysPrev'];
-            $this->config->renderer = $result->options['renderer'];
-            $this->config->quiet    = $result->options['quiet'];
+            $this->config->daysNext    = $result->options['daysNext'];
+            $this->config->daysPrev    = $result->options['daysPrev'];
+            $this->config->renderer    = $result->options['renderer'];
+            $this->config->quiet       = $result->options['quiet'];
+            $this->config->stopOnEmpty = $result->options['stopOnEmpty'];
+            $this->config->setDate($result->options['date']);
         } catch (\Exception $exc) {
             $this->preRenderParameterError();
             $parser->displayError($exc->getMessage());
@@ -106,6 +126,11 @@ abstract class UserInterface
     {
         $r = $this->getRenderer();
         $r->config = $this->config;
+
+        if ($this->config->stopOnEmpty && count($arEvents) == 0) {
+            $r->handleStopOnEmpty();
+            return;
+        }
         $r->renderAndOutput($arEvents);
     }
 

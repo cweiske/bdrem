@@ -8,6 +8,7 @@ class Config
     public $daysPrev;
     public $daysNext;
     public $locale;
+    public $stopOnEmpty;
 
     public function load()
     {
@@ -38,6 +39,16 @@ class Config
         $class = '\\bdrem\\Source_' . array_shift($settings);
 
         return new $class($settings[0]);
+    }
+
+    public function setDate($date)
+    {
+        if ($date === null) {
+            $this->date = date('Y-m-d');
+        } else {
+            $dt = new \DateTime($date);
+            $this->date = $dt->format('Y-m-d');
+        }
     }
 
     public function get($varname, $default = '')
