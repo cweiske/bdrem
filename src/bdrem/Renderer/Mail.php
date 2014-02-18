@@ -23,7 +23,6 @@ class Renderer_Mail extends Renderer
 
         $hdrs = array(
             'From'    => $this->config->get('mail_from', 'birthday@example.org'),
-            'Subject' => $subject
         );
         $mime = new \Mail_mime(
             array(
