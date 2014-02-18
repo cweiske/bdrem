@@ -26,7 +26,7 @@ class Renderer_Console extends Renderer
 
         $tbl = new \Console_Table(
             CONSOLE_TABLE_ALIGN_LEFT,
-            array('sect' => '', 'rule' => '-', 'vert' => ''),
+            array('intersection' => '', 'horizontal' => '-', 'vertical' => ''),
             1, null, $this->ansi
         );
         $tbl->setAlign(0, CONSOLE_TABLE_ALIGN_RIGHT);
