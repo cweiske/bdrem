@@ -18,5 +18,19 @@ abstract class Renderer
     }
 
     abstract public function render($arEvents);
+
+    protected function getLocalDate($dateStr)
+    {
+        if ($dateStr{0} != '?') {
+            return strftime('%x', strtotime($dateStr));
+        }
+
+        $dateStr = str_replace('????', '1899', $dateStr);
+        return str_replace(
+            array('1899', '99'),
+            array('????', '??'),
+            strftime('%x', strtotime($dateStr))
+        );
+    }
 }
 ?>

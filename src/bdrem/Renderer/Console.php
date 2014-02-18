@@ -60,7 +60,7 @@ class Renderer_Console extends Renderer
                         $event->age,
                         wordwrap($event->title, 30, "\n", true),
                         wordwrap($event->type, 20, "\n", true),
-                        $event->date,
+                        $this->getLocalDate($event->date),
                         strftime('%a', strtotime($event->localDate))
                     ),
                     $colorCode

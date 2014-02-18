@@ -38,14 +38,14 @@ HTM;
                 . '<td class="r">%s</td>'
                 . '<td>%s</td>'
                 . '<td>%s</td>'
-                . '<td class="r">%s</td>'
+                . '<td>%s</td>'
                 . '<td>%s</td>'
                 . "</tr>\n",
                 $event->days,
                 $event->age,
                 htmlspecialchars($event->title),
                 htmlspecialchars($event->type),
-                $event->date,
+                $this->getLocalDate($event->date),
                 strftime('%a', strtotime($event->localDate))
             );
         }
