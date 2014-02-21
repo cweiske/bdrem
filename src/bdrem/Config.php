@@ -5,19 +5,21 @@ class Config
 {
     public $source;
     public $date;
-    public $daysPrev;
-    public $daysNext;
+    public $daysPrev = 3;
+    public $daysNext = 7;
     public $locale;
-    public $stopOnEmpty;
+    public $stopOnEmpty = false;
+    public $cfgFileExists;
 
     public function load()
     {
         $f = __DIR__ . '/../../data/bdrem.config.php';
         if (file_exists($f)) {
+            $this->cfgFileExists = true;
             return $this->loadFile($f);
         }
 
-        throw new \Exception('No config file found');
+        $this->cfgFileExists = false;
     }
 
     protected function loadFile($filename)

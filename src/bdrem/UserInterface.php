@@ -11,11 +11,15 @@ abstract class UserInterface
             $this->config = new Config();
             $this->config->load();
             setlocale(LC_TIME, $this->config->locale);
-            $source = $this->config->loadSource();
 
             $parser = $this->loadParameters();
             $this->parseParameters($parser);
 
+            if (!$this->config->cfgFileExists) {
+                throw new \Exception('No config file found');
+            }
+
+            $source = $this->config->loadSource();
             $arEvents = $source->getEvents(
                 $this->config->date,
                 $this->config->daysPrev, $this->config->daysNext
@@ -24,7 +28,7 @@ abstract class UserInterface
             $this->render($arEvents);
         } catch (\Exception $e) {
             $this->preRenderParameterError();
-            echo 'Exception: ' . $e->getCode() . ' ' . $e->getMessage() . "\n";
+            echo 'Exception: ' . $e->getCode() . ' - ' . $e->getMessage() . "\n";
             exit(1);
         }
     }
