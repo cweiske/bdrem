@@ -97,15 +97,6 @@ abstract class UserInterface
                 'action'      => 'StoreString'
             )
         );
-        $parser->addOption(
-            'quiet',
-            array(
-                'short_name'  => '-q',
-                'long_name'   => '--quiet',
-                'description' => "Don't print status messages to stdout",
-                'action'      => 'StoreTrue'
-            )
-        );
         return $parser;
     }
 
@@ -117,7 +108,6 @@ abstract class UserInterface
             $this->config->daysNext    = $result->options['daysNext'];
             $this->config->daysPrev    = $result->options['daysPrev'];
             $this->config->renderer    = $result->options['renderer'];
-            $this->config->quiet       = $result->options['quiet'];
             $this->config->stopOnEmpty = $result->options['stopOnEmpty'];
             $this->config->setDate($result->options['date']);
         } catch (\Exception $exc) {
