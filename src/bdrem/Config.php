@@ -9,17 +9,35 @@ class Config
     public $daysNext = 7;
     public $locale;
     public $stopOnEmpty = false;
+
+    public $cfgFiles = array();
     public $cfgFileExists;
 
     public function load()
     {
-        $f = __DIR__ . '/../../data/bdrem.config.php';
-        if (file_exists($f)) {
-            $this->cfgFileExists = true;
-            return $this->loadFile($f);
+        $this->loadConfigFilePaths();
+        foreach ($this->cfgFiles as $file) {
+            if (file_exists($file)) {
+                $this->cfgFileExists = true;
+                return $this->loadFile($file);
+            }
+        }
+        $this->cfgFileExists = false;
+    }
+
+    protected function loadConfigFilePaths()
+    {
+        $pharFile = \Phar::running();
+        if ($pharFile == '') {
+            $this->cfgFiles[] = __DIR__ . '/../../data/bdrem.config.php';
+        } else {
+            //remove phar:// from the path
+            $this->cfgFiles[] = substr($pharFile, 7) . '.config.php';
         }
 
-        $this->cfgFileExists = false;
+        //TODO: add ~/.config/bdrem.php
+
+        $this->cfgFiles[] = '/etc/bdrem.php';
     }
 
     protected function loadFile($filename)

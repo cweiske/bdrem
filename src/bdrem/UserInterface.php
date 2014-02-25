@@ -17,7 +17,10 @@ abstract class UserInterface
             $this->handleCommands($res);
 
             if (!$this->config->cfgFileExists) {
-                throw new \Exception('No config file found');
+                throw new \Exception(
+                    "No config file found. Looked at the following places:\n"
+                    . '- ' . implode ("\n- ", $this->config->cfgFiles)
+                );
             }
 
             $source = $this->config->loadSource();
