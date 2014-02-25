@@ -13,7 +13,8 @@ abstract class UserInterface
             setlocale(LC_TIME, $this->config->locale);
 
             $parser = $this->loadParameters();
-            $this->parseParameters($parser);
+            $res = $this->parseParameters($parser);
+            $this->handleCommands($res);
 
             if (!$this->config->cfgFileExists) {
                 throw new \Exception('No config file found');
@@ -110,6 +111,7 @@ abstract class UserInterface
             $this->config->renderer    = $result->options['renderer'];
             $this->config->stopOnEmpty = $result->options['stopOnEmpty'];
             $this->config->setDate($result->options['date']);
+            return $result;
         } catch (\Exception $exc) {
             $this->preRenderParameterError();
             $parser->displayError($exc->getMessage());
@@ -136,6 +138,10 @@ abstract class UserInterface
         }
         $class = '\\bdrem\\Renderer_' . $renderer;
         return new $class();
+    }
+
+    protected function handleCommands($res)
+    {
     }
 
     protected function preRenderParameterError()
