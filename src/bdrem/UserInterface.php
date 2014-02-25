@@ -9,19 +9,19 @@ abstract class UserInterface
     {
         try {
             $this->config = new Config();
-            $this->config->load();
-            setlocale(LC_TIME, $this->config->locale);
-
             $parser = $this->loadParameters();
             $res = $this->parseParameters($parser);
-            $this->handleCommands($res);
 
+            $this->config->load();
             if (!$this->config->cfgFileExists) {
                 throw new \Exception(
                     "No config file found. Looked at the following places:\n"
                     . '- ' . implode ("\n- ", $this->config->cfgFiles)
                 );
             }
+
+            setlocale(LC_TIME, $this->config->locale);
+            $this->handleCommands($res);
 
             $source = $this->config->loadSource();
             $arEvents = $source->getEvents(
@@ -51,7 +51,7 @@ abstract class UserInterface
                 'description' => 'Show NUM days after date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
-                'default'     => $this->config->daysNext,
+                'default'     => null,
             )
         );
         $parser->addOption(
@@ -62,7 +62,7 @@ abstract class UserInterface
                 'description' => 'Show NUM days before date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
-                'default'     => $this->config->daysPrev,
+                'default'     => null,
             )
         );
         $parser->addOption(
@@ -101,6 +101,17 @@ abstract class UserInterface
                 'action'      => 'StoreString'
             )
         );
+        $parser->addOption(
+            'configfile',
+            array(
+                'short_name'  => '-c',
+                'long_name'   => '--config',
+                'help_name'   => 'FILE',
+                'description' => 'Path to configuration file',
+                'action'      => 'StoreString'
+            )
+        );
+
         return $parser;
     }
 
@@ -108,7 +119,11 @@ abstract class UserInterface
     {
         try {
             $result = $parser->parse();
-            // do something with the result object
+
+            if ($result->options['configfile'] !== null) {
+                $this->config->cfgFiles = array($result->options['configfile']);
+            }
+
             $this->config->daysNext    = $result->options['daysNext'];
             $this->config->daysPrev    = $result->options['daysPrev'];
             $this->config->renderer    = $result->options['renderer'];

@@ -3,19 +3,26 @@ namespace bdrem;
 
 class Config
 {
-    public $source;
     public $date;
-    public $daysPrev = 3;
-    public $daysNext = 7;
+    public $daysPrev;
+    public $daysNext;
     public $locale;
-    public $stopOnEmpty = false;
+    public $renderer;
+    public $source;
+    public $stopOnEmpty;
 
     public $cfgFiles = array();
     public $cfgFileExists;
 
-    public function load()
+
+
+    public function __construct()
     {
         $this->loadConfigFilePaths();
+    }
+
+    public function load()
+    {
         foreach ($this->cfgFiles as $file) {
             if (file_exists($file)) {
                 $this->cfgFileExists = true;
@@ -45,7 +52,9 @@ class Config
         include $filename;
         $vars = get_defined_vars();
         foreach ($vars as $k => $value) {
-            $this->$k = $value;
+            if (!isset($this->$k) || $this->$k === null) {
+                $this->$k = $value;
+            }
         }
     }
 
