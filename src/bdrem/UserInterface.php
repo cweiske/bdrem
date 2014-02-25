@@ -32,7 +32,7 @@ abstract class UserInterface
             $this->render($arEvents);
         } catch (\Exception $e) {
             $this->preRenderParameterError();
-            echo 'Exception: ' . $e->getCode() . ' - ' . $e->getMessage() . "\n";
+            echo 'Error: ' . $e->getMessage() . "\n";
             exit(1);
         }
     }
