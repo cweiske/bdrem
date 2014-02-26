@@ -18,7 +18,7 @@ $phar->buildFromDirectory(
     realpath(__DIR__ . '/../'),
     '#'
     . '^' . preg_quote(realpath(__DIR__ . '/../'), '#')
-    . '/(data/bdrem.config.php.dist|src/bdrem/|www/|README\.rst)'
+    . '/(data/bdrem.config.php.dist|lib/|src/bdrem/|www/|README\.rst)'
     . '#'
 );
 
