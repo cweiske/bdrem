@@ -23,6 +23,7 @@ class Renderer_Mail extends Renderer
 
         $hdrs = array(
             'From'    => $this->config->get('mail_from', 'birthday@example.org'),
+            'Auto-Submitted' => 'auto-generated'
         );
         $mime = new \Mail_mime(
             array(
