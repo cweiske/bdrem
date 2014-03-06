@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="bdrem" default="phar" basedir=".">
+
+ <property name="version"  value="0.1.0" />
+ <property name="pharfile" value="${phing.dir}/dist/${phing.project.name}-${version}.phar" />
+ <property name="libdir" value="${phing.dir}/lib"/>
+
+ <fileset id="fs.phar" dir="${phing.dir}">
+  <include name="data/**"/>
+  <include name="bin/**"/>
+  <include name="lib/**"/>
+  <include name="src/**"/>
+  <include name="www/**"/>
+
+  <include name="README.rst"/>
+
+  <exclude name="data/config.php"/>
+  <exclude name="bin/fetch-deps.php"/>
+  <exclude name="bin/makephar.php"/>
+ </fileset>
+
+
+ <typedef name="pearPackageFileSet" classname="phing.types.PearPackageFileSet" />
+
+ <target name="phar" depends="collectdeps"
+         description="Create zip file for release"
+ >
+  <!-- strip the shebang  -->
+  <copy file="${phing.dir}/bin/bdrem.php" tofile="${phing.dir}/bin/phar-bdrem.php">
+   <filterchain>
+    <striplinecomments>
+     <comment value="#" />
+    </striplinecomments>
+   </filterchain>
+  </copy>
+
+  <delete file="${pharfile}"/>
+  <pharpackage basedir="${phing.dir}"
+   destfile="${pharfile}"
+   stub="${phing.dir}/src/phar-stub.php"
+   alias="bdrem.phar"
+  >
+   <fileset refid="fs.phar"/>
+  </pharpackage>
+ </target>
+
+
+ <target name="collectdeps" description="Copy package dependencies to lib/">
+  <delete dir="${libdir}"/>
+  <mkdir dir="${libdir}"/>
+
+  <pearPackageFileset id="dep-Console_Color2" package="pear.php.net/Console_Color2"/>
+  <pearPackageFileset id="dep-Console_CommandLine" package="pear.php.net/Console_CommandLine"/>
+  <pearPackageFileset id="dep-Console_Table" package="pear.php.net/Console_Table"/>
+  <pearPackageFileset id="dep-Mail_mime" package="pear.php.net/Mail_mime"/>
+  <pearPackageFileset id="dep-PEAR" package="pear.php.net/PEAR">
+   <include name="PEAR/Exception.php"/>
+  </pearPackageFileset>
+
+  <copy todir="${libdir}">
+   <fileset refid="dep-Console_Color2"/>
+   <fileset refid="dep-Console_CommandLine"/>
+   <fileset refid="dep-Console_Table"/>
+   <fileset refid="dep-Mail_mime"/>
+   <fileset refid="dep-PEAR"/>
+  </copy>
+ </target>
+
+</project>

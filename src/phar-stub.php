@@ -5,7 +5,7 @@ if (!in_array('phar', stream_get_wrappers()) || !class_exists('Phar', false)) {
 }
 
 $web = 'www/index.php';
-$cli = 'bin/bdrem.php';
+$cli = 'bin/phar-bdrem.php';
 
 function rewritePath($path)
 {

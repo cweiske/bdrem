@@ -1,3 +1,4 @@
 /data/bdrem.config.php
 /dist/
 /lib
+/bin/phar-bdrem.php
