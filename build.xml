@@ -53,8 +53,10 @@
   <pearPackageFileset id="dep-Console_CommandLine" package="pear.php.net/Console_CommandLine"/>
   <pearPackageFileset id="dep-Console_Table" package="pear.php.net/Console_Table"/>
   <pearPackageFileset id="dep-Mail_mime" package="pear.php.net/Mail_mime"/>
+  <pearPackageFileset id="dep-Net_LDAP2" package="pear.php.net/Net_LDAP2"/>
   <pearPackageFileset id="dep-PEAR" package="pear.php.net/PEAR">
    <include name="PEAR/Exception.php"/>
+   <include name="PEAR.php"/>
   </pearPackageFileset>
 
   <copy todir="${libdir}">
@@ -62,6 +64,7 @@
    <fileset refid="dep-Console_CommandLine"/>
    <fileset refid="dep-Console_Table"/>
    <fileset refid="dep-Mail_mime"/>
+   <fileset refid="dep-Net_LDAP2"/>
    <fileset refid="dep-PEAR"/>
   </copy>
  </target>
