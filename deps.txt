@@ -1,4 +1,0 @@
-pear.php.net/Console_Color2
-pear.php.net/Console_CommandLine
-pear.php.net/Console_Table
-pear.php.net/Mail_mime
