@@ -47,7 +47,7 @@ abstract class UserInterface
             'daysNext',
             array(
                 'short_name'  => '-n',
-                'long_name'   => '--days-next',
+                'long_name'   => '--next',
                 'description' => 'Show NUM days after date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
@@ -58,7 +58,7 @@ abstract class UserInterface
             'daysPrev',
             array(
                 'short_name'  => '-p',
-                'long_name'   => '--previous',
+                'long_name'   => '--prev',
                 'description' => 'Show NUM days before date',
                 'help_name'   => 'NUM',
                 'action'      => 'StoreInt',
