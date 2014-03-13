@@ -42,6 +42,11 @@
   >
    <fileset refid="fs.phar"/>
   </pharpackage>
+
+  <exec executable="bzip2" dir="${phing.dir}/dist">
+   <arg value="-kf"/>
+   <arg file="${pharfile}"/>
+  </exec>
  </target>
 
 
