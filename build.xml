@@ -74,4 +74,9 @@
   </copy>
  </target>
 
+
+ <target name="docs" description="render documentation">
+  <rst file="README.rst"/>
+ </target>
+
 </project>
