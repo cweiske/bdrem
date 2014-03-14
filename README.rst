@@ -12,9 +12,11 @@ Features
 
 Data sources
 ============
-- Any SQL database
+- Any SQL database.
+
+  - Multiple date fields per record supported.
 - An LDAP server
-- Birthday reminder files (``.bdf``)
+- `Birthday reminder <http://cweiske.de/birthday3.htm>` files (``.bdf``)
 
 Output formats
 ==============
@@ -28,6 +30,10 @@ Configuration
 =============
 Copy ``data/bdrem.config.php.dist`` to ``data/bdrem.config.php`` and
 adjust it to your liking.
+
+When running the ``.phar``, extract the configuration file first::
+
+    $ php dist/bdrem-0.1.0.phar config > bdrem-0.1.0.phar.config.php
 
 
 MS SQL server
