@@ -66,19 +66,20 @@ HTM;
                 $class .= ' next';
             }
             $s .= sprintf(
-                '<tr class="' . trim($class) . '">'
+                '<tr class="h-event ' . trim($class) . '">'
                 . '<td class="icon"></td>'
                 . '<td class="r">%d</td>'
                 . '<td class="r">%s</td>'
-                . '<td>%s</td>'
-                . '<td>%s</td>'
-                . '<td>%s</td>'
+                . '<td class="p-name">%s</td>'
+                . '<td class="p-summary p-category">%s</td>'
+                . '<td class="dt-start"><time class="value" datetime="%s">%s</time></td>'
                 . '<td>%s</td>'
                 . "</tr>\n",
                 $event->days,
                 $event->age,
                 htmlspecialchars($event->title),
                 htmlspecialchars($event->type),
+                $event->date,
                 $this->getLocalDate($event->date),
                 strftime('%a', strtotime($event->localDate))
             );
