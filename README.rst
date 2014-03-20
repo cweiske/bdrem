@@ -5,6 +5,7 @@ Birthday reminder that sends out e-mails.
 
 It can also generate ASCII tables on your console/shell and normal HTML pages.
 
+.. contents::
 
 ========
 Features
@@ -25,6 +26,69 @@ Output formats
 - Email (text + HTML parts)
 
 
+=====
+Usage
+=====
+
+Command line
+============
+After configuration_, you can test and use *bdrem* via command line::
+
+    $ bdrem
+    -----------------------------------------------------------
+    Days  Age  Name                  Event      Date        Day
+    -----------------------------------------------------------
+       0   32  Foo Bar               Birthday   20.03.1982  Do 
+       1   33  Andrea Milestone      Birthday   21.03.1981  Fr 
+       7   32  Hugh Success          Birthday   27.03.1982  Do 
+      12       Welt                  Scherztag  01.04.????  Di
+
+Help
+----
+To find out about all supported command line options, use ``--help``::
+
+    Usage:
+      ./bin/bdrem.php [options]
+      ./bin/bdrem.php [options] <command> [options]
+    
+    Options:
+      -n NUM, --next=NUM                Show NUM days after date
+      -p NUM, --prev=NUM                Show NUM days before date
+      -r renderer, --renderer=renderer  Output mode
+      --list-renderer                   lists valid choices for option renderer
+      -e, --stoponempty                 Output nothing when list is empty
+      -d date, --date=date              Date to show events for
+      -c FILE, --config=FILE            Path to configuration file
+      -h, --help                        show this help message and exit
+      -v, --version                     show the program version and exit
+    
+    Commands:
+      readme  Show README.rst file
+      config  Extract configuration file
+
+
+E-Mail
+======
+To send birthday reminder e-mails, use the ``mail`` renderer::
+
+    $ bdrem --renderer=mail
+
+If you only want an email if there is a birthday, use ``--stoponempty``::
+
+    $ bdrem --renderer=mail --stoponempty
+
+Make sure your config file contains ``$mail_from`` and ``$mail_to`` settings.
+
+
+HTML page
+=========
+Simply point your web browser to the ``.phar`` file, or ``index.php``.
+You will get a colorful HTML table:
+
+.. image:: docs/html.png
+
+
+
 =============
 Configuration
 =============
@@ -36,8 +100,68 @@ When running the ``.phar``, extract the configuration file first::
     $ php dist/bdrem-0.1.0.phar config > bdrem-0.1.0.phar.config.php
 
 
-MS SQL server
+Birthday file
 =============
+If you have a ``.bdf`` file from `birthday reminder`__ or `birthday reminder 3`__,
+you can use it with *bdrem*.
+
+Configure your source as follows::
+
+    $source = array('Bdf', '/path/to/birthday.bdf');
+
+__ http://cweiske.de/birthday.htm 
+__ http://cweiske.de/birthday3.htm 
+
+
+LDAP server
+===========
+*bdrem* can read birthdays and other events from persons in an LDAP server.
+It is known to work fine with ``evolutionPerson`` objects.
+Attributes ``birthDate`` and ``anniversary`` are read.
+
+Configure it as follows::
+
+    $source = array(
+        'Ldap',
+        array(
+            'host'   => 'ldap.example.org',
+            'basedn' => 'ou=adressbuch,dc=example,dc=org',
+            'binddn' => 'cn=FIXME,ou=users,dc=example,dc=org',
+            'bindpw' => 'FIXME'
+        )
+    );
+
+
+SQL database
+============
+Events can be fetched from any SQL database supported by PHP's
+PDO extension - MySQL, SQLite, PostgreSQL and so on.
+
+You may configure every little detail of your database::
+
+    $source = array(
+        'Sql',
+        array(
+            'dsn' => 'mysql:dbname=bdrem;host=127.0.0.1',
+            'user' => 'FIXME',
+            'password' => 'FIXME',
+            'table' => 'contacts',
+            'fields' => array(
+                'date' => array(
+                    //column name => event title
+                    'c_birthday' => 'Birthday'
+                ),
+                //column with name, or array with column names
+                'name' => array('c_name'),
+                //sprintf-compatible name formatting instruction
+                'nameFormat' => '%s',
+            )
+        )
+    );
+
+
+MS SQL server
+-------------
 Configure the date format in ``/etc/freetds/locales.conf``::
 
     [default]
@@ -65,9 +189,9 @@ Dependencies
 - PEAR packages:
 
   - Console_CommandLine
+  - Console_Table
   - Mail
   - Mail_mime
-  - Console_Table
   - Net_LDAP2
 
 
