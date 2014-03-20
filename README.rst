@@ -188,11 +188,11 @@ Dependencies
 - PDO
 - PEAR packages:
 
-  - Console_CommandLine
-  - Console_Table
-  - Mail
-  - Mail_mime
-  - Net_LDAP2
+  - `Console_Color2 <https://pear.php.net/package/Console_Color2>`_
+  - `Console_CommandLine <https://pear.php.net/package/Console_CommandLine>`_
+  - `Console_Table <https://pear.php.net/package/Console_Table>`_
+  - `Mail_mime <https://pear.php.net/package/Mail_mime>`_
+  - `Net_LDAP2 <https://pear.php.net/package/Net_LDAP2>`_
 
 
 =======
@@ -201,6 +201,18 @@ License
 ``bdrem`` is licensed under the `AGPL v3`__ or later.
 
 __ http://www.gnu.org/licenses/agpl.html
+
+
+========
+Homepage
+========
+Web site
+   http://cweiske.de/bdrem.htm
+
+Source code
+   http://git.cweiske.de/bdrem.git
+
+   Mirror: https://github.com/cweiske/bdrem
 
 
 ======
