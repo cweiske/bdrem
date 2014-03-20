@@ -1,10 +1,44 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
+/**
+ * Renders events in a HTML table.
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/bdrem.htm
+ */
 class Renderer_HtmlTable extends Renderer
 {
+    /**
+     * HTTP content type
+     * @var string
+     */
     protected $httpContentType = 'text/html; charset=utf-8';
 
+    /**
+     * Render the events in a HTML table
+     *
+     * @param array $arEvents Event objects to render
+     *
+     * @return string HTML table
+     */
     public function render($arEvents)
     {
         $s = <<<HTM

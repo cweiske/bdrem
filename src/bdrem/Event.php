@@ -1,20 +1,46 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
+/**
+ * Event model with title, type and date.
+ * Contains calculation methods
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/bdrem.htm
+ */
 class Event
 {
     /**
      * Title of the event or name of the person that has the event
+     * @var string
      */
     public $title;
 
     /**
      * Type of the event, e.g. "birthday"
+     * @var string
      */
     public $type;
 
     /**
-     * Date of the event. 
+     * Date of the event.
      * ???? as year is allowed
      *
      * @var string YYYY-MM-DD
@@ -53,6 +79,13 @@ class Event
 
 
 
+    /**
+     * Set event data
+     *
+     * @param string $title Name of person the event relates to
+     * @param string $type  Type of the event (e.g. "birthday")
+     * @param string $date  Date of the event in format YYYY-MM-DD
+     */
     public function __construct($title = null, $type = null, $date = null)
     {
         $this->title = $title;
@@ -64,9 +97,13 @@ class Event
      * Checks if the event's date is within the given date.
      * Also calculates the age and days since the event.
      *
+     * @param string  $strDate       Date, YYYY-MM-DD
+     * @param integer $nDaysPrevious Include number of days before $strDate
+     * @param integer $nDaysNext     Include number of days after $strDate
+     *
      * @return boolean True if the event's date is within the given range
      */
-    public function isWithin($strDate, $nDaysPrev, $nDaysNext)
+    public function isWithin($strDate, $nDaysPrevious, $nDaysNext)
     {
         $this->refDate = $strDate;
         list($rYear, $rMonth, $rDay) = explode('-', $strDate);
@@ -106,13 +143,19 @@ class Event
         if ($nDiff > 0) {
             return $nDiff <= $nDaysNext;
         } else {
-            return -$nDiff <= $nDaysPrev;
+            return -$nDiff <= $nDaysPrevious;
         }
 
         return false;
     }
 
     /**
+     * Compare two events by by their date, then by their title.
+     * Used for sorting
+     *
+     * @param Event $e1 Event #1
+     * @param Event $e2 Event #2
+     *
      * @return integer x < 0: e1 is less than e2
      *                 x > 0: e1 is larger than e2
      */
@@ -120,7 +163,7 @@ class Event
     {
         list($e1Year, $e1Month, $e1Day) = explode('-', $e1->date);
         list($e2Year, $e2Month, $e2Day) = explode('-', $e2->date);
-        
+
         if ($e1Month < 3 && $e2Month > 10) {
             return 1;
         } else if ($e1Month > 10 && $e2Month < 3) {

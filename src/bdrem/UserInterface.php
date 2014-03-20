@@ -1,10 +1,42 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
+/**
+ * Generic user interface class
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/bdrem.htm
+ */
 abstract class UserInterface
 {
+    /**
+     * Configuration
+     * @var Config
+     */
     protected $config;
 
+    /**
+     * Start the user interface, load config, parse and render events.
+     *
+     * @return void
+     */
     public function run()
     {
         try {
@@ -16,7 +48,7 @@ abstract class UserInterface
             if (!$this->config->cfgFileExists) {
                 throw new \Exception(
                     "No config file found. Looked at the following places:\n"
-                    . '- ' . implode ("\n- ", $this->config->cfgFiles)
+                    . '- ' . implode("\n- ", $this->config->cfgFiles)
                 );
             }
 
@@ -37,6 +69,11 @@ abstract class UserInterface
         }
     }
 
+    /**
+     * Load parameters for the CLI option parser.
+     *
+     * @return \Console_CommandLine CLI option parser
+     */
     protected function loadParameters()
     {
         $parser = new \Console_CommandLine();
@@ -115,7 +152,14 @@ abstract class UserInterface
         return $parser;
     }
 
-    protected function parseParameters($parser)
+    /**
+     * Let the CLI option parser parse the options.
+     *
+     * @param object $parser Option parser
+     *
+     * @return object Parsed command line parameters
+     */
+    protected function parseParameters(\Console_CommandLine $parser)
     {
         try {
             $result = $parser->parse();
@@ -136,6 +180,13 @@ abstract class UserInterface
         }
     }
 
+    /**
+     * Output the events
+     *
+     * @param array $arEvents Event objects to render
+     *
+     * @return void
+     */
     protected function render($arEvents)
     {
         $r = $this->getRenderer();
@@ -148,6 +199,11 @@ abstract class UserInterface
         $r->renderAndOutput($arEvents);
     }
 
+    /**
+     * Load the configured renderer
+     *
+     * @return Renderer Renderer instance
+     */
     protected function getRenderer()
     {
         $renderer = ucfirst($this->config->renderer);
@@ -158,10 +214,22 @@ abstract class UserInterface
         return new $class();
     }
 
+    /**
+     * Handle any commands given on the CLI
+     *
+     * @param object $res Command line parameters and options
+     *
+     * @return void
+     */
     protected function handleCommands($res)
     {
     }
 
+    /**
+     * Do something before a parameter parsing error is shown
+     *
+     * @return void
+     */
     protected function preRenderParameterError()
     {
     }

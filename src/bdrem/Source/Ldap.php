@@ -1,12 +1,42 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
 /**
  * Fetch data from an LDAP server.
  * Works fine with evolutionPerson schema.
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
  */
 class Source_Ldap
 {
+    /**
+     * LDAP server configuration
+     *
+     * Keys:
+     * - host   - LDAP server host name
+     * - basedn - root DN that gets searched
+     * - binddn - Username to authenticate with
+     * - bindpw - Password for username
+     *
+     * @var array
+     */
     protected $config;
 
     /**
@@ -25,7 +55,14 @@ class Source_Ldap
     }
 
     /**
-     * @param string $strDate Date the events shall be found for, YYYY-MM-DD
+     * Return all events for the given date range
+     *
+     * @param string  $strDate       Date the events shall be found for,
+     *                               YYYY-MM-DD
+     * @param integer $nDaysPrevious Include number of days before $strDate
+     * @param integer $nDaysNext     Include number of days after $strDate
+     *
+     * @return Event[] Array of matching event objects
      */
     public function getEvents($strDate, $nDaysPrevious, $nDaysNext)
     {
@@ -89,6 +126,14 @@ class Source_Ldap
         return $arEvents;
     }
 
+    /**
+     * Extract the name from the given LDAP entry object.
+     * Uses displayName or givenName + sn
+     *
+     * @param object $entry LDAP entry
+     *
+     * @return string Name or NULL
+     */
     protected function getNameFromEntry(\Net_LDAP2_Entry $entry)
     {
         $arEntry = $entry->getValues();
@@ -103,6 +148,13 @@ class Source_Ldap
     }
 
     /**
+     * Create an array of dates that are included in the given range.
+     *
+     * @param string  $strDate       Date the events shall be found for,
+     *                               YYYY-MM-DD
+     * @param integer $nDaysPrevious Include number of days before $strDate
+     * @param integer $nDaysNext     Include number of days after $strDate
+     *
      * @return array Values like "-01-24" ("-$month-$day")
      */
     protected function getDates($strDate, $nDaysPrevious, $nDaysNext)
@@ -117,6 +169,5 @@ class Source_Ldap
         } while (--$numDays >= 0);
         return $arDays;
     }
-
 }
 ?>

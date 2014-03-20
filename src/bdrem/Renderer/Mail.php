@@ -1,10 +1,44 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
 require_once 'Mail/mime.php';
 
+/**
+ * Send out mails
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/bdrem.htm
+ */
 class Renderer_Mail extends Renderer
 {
+    /**
+     * Render the events - send out mails.
+     *
+     * Uses the config's "mail_to" array as recipients.
+     * Sends out a single mail for each recipient.
+     * Config "mail_from" can also be used.
+     *
+     * @param array $arEvents Array of events to display
+     *
+     * @return void
+     */
     public function render($arEvents)
     {
         $todays = array();
@@ -49,6 +83,15 @@ class Renderer_Mail extends Renderer
         }
     }
 
+    /**
+     * Shorten the given string to the specified length.
+     * Adds ... when the string was too long
+     *
+     * @param string  $str String to shorten
+     * @param integer $len Maximum length of the string
+     *
+     * @return string Shortened string
+     */
     protected function shorten($str, $len)
     {
         if (mb_strlen($str) <= $len) {

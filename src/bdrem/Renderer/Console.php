@@ -1,8 +1,35 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
+/**
+ * Render events on the terminal as ASCII table
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/bdrem.htm
+ */
 class Renderer_Console extends Renderer
 {
+    /**
+     * HTTP content type
+     * @var string
+     */
     protected $httpContentType = 'text/plain; charset=utf-8';
 
     /**
@@ -17,6 +44,13 @@ class Renderer_Console extends Renderer
      */
     protected $cc;
 
+    /**
+     * Render events as console table
+     *
+     * @param array $arEvents Array of events to render
+     *
+     * @return string ASCII table
+     */
     public function render($arEvents)
     {
         $this->loadConfig();
@@ -70,6 +104,14 @@ class Renderer_Console extends Renderer
         return $tbl->getTable();
     }
 
+    /**
+     * Wrap each string in an array in an ANSI color code
+     *
+     * @param array  $data      Array of strings
+     * @param string $colorCode ANSI color code or name
+     *
+     * @return array Wrapped data
+     */
     protected function ansiWrap($data, $colorCode = null)
     {
         if (!$this->ansi || $colorCode === null) {
@@ -84,6 +126,11 @@ class Renderer_Console extends Renderer
         return $data;
     }
 
+    /**
+     * Load configuration values into the class
+     *
+     * @return void
+     */
     protected function loadConfig()
     {
         if (isset($this->config->ansi)) {

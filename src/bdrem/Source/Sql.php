@@ -1,17 +1,73 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
 /**
  * Fetch data from an SQL database
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
  */
 class Source_Sql
 {
+    /**
+     * PDO data source description
+     * @var string
+     */
     protected $dsn;
-    protected $user;
-    protected $password;
-    protected $table;
-    protected $fields ;
 
+    /**
+     * Database user name
+     * @var string
+     */
+    protected $user;
+
+    /**
+     * Database password
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * Database table with event data
+     * @var string
+     */
+    protected $table;
+
+    /**
+     * Field configuration
+     * Keys:
+     * - date - array of columns with dates and their event title,
+     *          e.g. 'c_birthday' => 'Birthday'
+     * - name - array of name columns
+     * - nameFormat - sprintf-compatible name formatting instruction,
+     *                uses name columns
+     *
+     * @var array
+     */
+    protected $fields;
+
+    /**
+     * Set SQL server configuration
+     *
+     * @param array $config SQL server configuration with keys:
+     *                      dsn, user, password, table and fields
+     */
     public function __construct($config)
     {
         $this->dsn      = $config['dsn'];
@@ -22,7 +78,14 @@ class Source_Sql
     }
 
     /**
-     * @param string $strDate Date the events shall be found for, YYYY-MM-DD
+     * Return all events for the given date range
+     *
+     * @param string  $strDate       Date the events shall be found for,
+     *                               YYYY-MM-DD
+     * @param integer $nDaysPrevious Include number of days before $strDate
+     * @param integer $nDaysNext     Include number of days after $strDate
+     *
+     * @return Event[] Array of matching event objects
      */
     public function getEvents($strDate, $nDaysPrevious, $nDaysNext)
     {
@@ -85,6 +148,13 @@ class Source_Sql
     }
 
     /**
+     * Create an array of dates that are included in the given range.
+     *
+     * @param string  $strDate       Date the events shall be found for,
+     *                               YYYY-MM-DD
+     * @param integer $nDaysPrevious Include number of days before $strDate
+     * @param integer $nDaysNext     Include number of days after $strDate
+     *
      * @return array Key is the month, value an array of days
      */
     protected function getDates($strDate, $nDaysPrevious, $nDaysNext)

@@ -1,22 +1,64 @@
 <?php
+/**
+ * Part of bdrem
+ *
+ * PHP version 5
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @link      http://cweiske.de/bdrem.htm
+ */
 namespace bdrem;
 
+/**
+ * HTML page renderer. Renders a full HTML page.
+ *
+ * @category  Tools
+ * @package   Bdrem
+ * @author    Christian Weiske <cweiske@cweiske.de>
+ * @copyright 2014 Christian Weiske
+ * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
+ * @version   Release: @package_version@
+ * @link      http://cweiske.de/bdrem.htm
+ */
 class Renderer_Html extends Renderer
 {
+    /**
+     * HTTP content type
+     * @var string
+     */
     protected $httpContentType = 'application/xhtml+xml; charset=utf-8';
 
+    /**
+     * Send out HTTP headers when nothing shall be outputted.
+     *
+     * @return void
+     */
     public function handleStopOnEmpty()
     {
         header('HTTP/1.0 204 No Content');
     }
 
+    /**
+     * Generate a HTML page with the given events.
+     *
+     * @param array $arEvents Events to display on the HTML page
+     *
+     * @return string HTML code
+     *
+     * @see Renderer_HtmlTable
+     */
     public function render($arEvents)
     {
         $tr = new Renderer_HtmlTable();
         $table = $tr->render($arEvents);
         $s = <<<HTM
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
  <head>
   <title>bdrem</title>
