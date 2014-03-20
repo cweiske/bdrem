@@ -40,6 +40,16 @@ class Cli extends UserInterface
         //set default renderer to console
         $parser->options['renderer']->default = 'console';
 
+        $parser->addOption(
+            'ansi',
+            array(
+                'long_name'   => '--no-color',
+                'description' => 'Do not output ANSI color codes',
+                'action'      => 'StoreFalse',
+                'default'     => true
+            )
+        );
+
         //only on CLI
         $parser->addCommand(
             'readme', array(

@@ -173,6 +173,9 @@ abstract class UserInterface
             $this->config->renderer    = $result->options['renderer'];
             $this->config->stopOnEmpty = $result->options['stopOnEmpty'];
             $this->config->setDate($result->options['date']);
+            if (isset($result->options['ansi'])) {
+                $this->config->ansi = $result->options['ansi'];
+            }
             return $result;
         } catch (\Exception $exc) {
             $this->preRenderParameterError();
