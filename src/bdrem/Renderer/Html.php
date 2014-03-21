@@ -53,6 +53,24 @@ class Renderer_Html extends Renderer
      */
     public function render($arEvents)
     {
+        $links = '';
+        if (isset($_SERVER['HTTP_HOST'])) {
+            $links = '  <link rel="alternate" type="text/calendar" href="'
+                . $_SERVER['REQUEST_SCHEME'] . '://'
+                . $_SERVER['HTTP_HOST']
+                . preg_replace('#\?.+$#', '', $_SERVER['REQUEST_URI'])
+                . '?renderer=ical'
+                . '"/>'
+                . "\n";
+            $links .= '  <link rel="alternate" type="text/plain" href="'
+                . $_SERVER['REQUEST_SCHEME'] . '://'
+                . $_SERVER['HTTP_HOST']
+                . preg_replace('#\?.+$#', '', $_SERVER['REQUEST_URI'])
+                . '?renderer=console'
+                . '"/>'
+                . "\n";
+        }
+
         $tr = new Renderer_HtmlTable();
         $table = $tr->render($arEvents);
         $s = <<<HTM
@@ -63,7 +81,7 @@ class Renderer_Html extends Renderer
  <head>
   <title>bdrem</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <style type="text/css">
+$links  <style type="text/css">
 table {
     border: 1px solid black;
     border-collapse: collapse;

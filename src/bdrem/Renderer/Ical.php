@@ -23,6 +23,7 @@ namespace bdrem;
  * @license   http://www.gnu.org/licenses/agpl.html GNU AGPL v3
  * @version   Release: @package_version@
  * @link      http://cweiske.de/bdrem.htm
+ * @link      http://severinghaus.org/projects/icv/ iCal validator
  */
 class Renderer_Ical extends Renderer
 {
