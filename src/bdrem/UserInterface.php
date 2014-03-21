@@ -113,6 +113,7 @@ abstract class UserInterface
                     'console',
                     'html',
                     'htmltable',
+                    'ical',
                     'mail',
                 ),
                 'default'     => 'console',
