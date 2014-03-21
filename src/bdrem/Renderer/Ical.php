@@ -58,9 +58,7 @@ class Renderer_Ical extends Renderer
                 . '.' . $event->age
                 . '.' . md5($event->title . '/' . $event->type)
                 . '@bdrem';
-            // we want the zero time because it expresses midnight in every
-            // time zone
-            $props['DTSTART']  = str_replace('-', '', $event->localDate) . 'T000000';
+            $props['DTSTART;VALUE=DATE']  = str_replace('-', '', $event->localDate);
             $props['DURATION'] = 'P1D';
             $props['SUMMARY']  = sprintf(
                 '%s - %s. %s', $event->title, $event->age, $event->type

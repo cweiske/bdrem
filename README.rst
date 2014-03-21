@@ -83,13 +83,20 @@ Make sure your config file contains ``$mail_from`` and ``$mail_to`` settings.
 
 iCalendar
 =========
-Exporting birthday events into an ics file is easy::
+Exporting birthday events into an ``.ics`` file is easy::
 
    $ bdrem --renderer=ical > birthdays.ics
 
 It is possible to access the calendar via HTTP, too::
 
     http://example.org/bdrem/?renderer=ical
+
+You can subscribe to it in your calendar or email application.
+Integration has been tested with Thunderbird's Lightning__ and Claws Mail's
+vCalendar__ plugin.
+
+__ https://addons.mozilla.org/en-US/thunderbird/addon/lightning/
+__ http://www.claws-mail.org/plugin.php?plugin=vcalendar
 
 
 HTML page
