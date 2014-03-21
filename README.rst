@@ -215,6 +215,10 @@ Dependencies
   - `Net_LDAP2 <https://pear.php.net/package/Net_LDAP2>`_
 
 
+Note that the ``.phar`` file already includes all dependencies;
+you do not need to install anything.
+
+
 =======
 License
 =======
