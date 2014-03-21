@@ -1,0 +1,11 @@
+2014-03-21  Christian Weiske  <cweiske@cweiske.de>
+
+	* Source: SQL database
+	* Source: LDAP server
+	* Source: BDF files
+	* Output: ASCII table
+	* Output: Email
+	* Output: HTML
+	* Output: iCalendar
+	* Version 0.5.0
+
