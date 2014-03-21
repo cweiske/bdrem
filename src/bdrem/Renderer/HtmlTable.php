@@ -72,7 +72,9 @@ HTM;
                 . '<td class="r">%s</td>'
                 . '<td class="p-name">%s</td>'
                 . '<td class="p-summary p-category">%s</td>'
-                . '<td class="dt-start"><time class="value" datetime="%s">%s</time></td>'
+                . '<td class="dt-start">'
+                . '<time class="value" datetime="%s">%s</time>'
+                . '</td>'
                 . '<td>%s</td>'
                 . "</tr>\n",
                 $event->days,
