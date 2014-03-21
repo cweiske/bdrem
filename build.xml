@@ -62,6 +62,7 @@
   <pearPackageFileset id="dep-PEAR" package="pear.php.net/PEAR">
    <include name="PEAR/Exception.php"/>
    <include name="PEAR.php"/>
+   <include name="PEAR5.php"/>
   </pearPackageFileset>
 
   <copy todir="${libdir}">

@@ -55,6 +55,9 @@ class Renderer_Html extends Renderer
     {
         $links = '';
         if (isset($_SERVER['HTTP_HOST'])) {
+            if (!isset($_SERVER['REQUEST_SCHEME'])) {
+                $_SERVER['REQUEST_SCHEME'] = 'http';
+            }
             $links = '  <link rel="alternate" type="text/calendar" href="'
                 . $_SERVER['REQUEST_SCHEME'] . '://'
                 . $_SERVER['HTTP_HOST']

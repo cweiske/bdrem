@@ -41,6 +41,13 @@ set_include_path(
     . PATH_SEPARATOR . 'phar://' . __FILE__ . '/lib/'
 );
 Phar::webPhar(null, $web, null, array(), 'rewritePath');
+
+//work around https://bugs.php.net/bug.php?id=52322
+if (php_sapi_name() == 'cgi-fcgi') {
+    require 'phar://' . __FILE__ . '/' . $web;
+    exit();
+}
+
 require 'phar://' . __FILE__ . '/' . $cli;
 __HALT_COMPILER();
 ?>
