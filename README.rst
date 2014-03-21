@@ -3,7 +3,8 @@ bdrem - Birthday reminder by mail
 *********************************
 Birthday reminder that sends out e-mails.
 
-It can also generate ASCII tables on your console/shell and normal HTML pages.
+It can also generate ASCII tables on your console, iCalendar files
+and normal HTML pages.
 
 .. contents::
 
@@ -17,7 +18,7 @@ Data sources
 
   - Multiple date fields per record supported.
 - An LDAP server
-- `Birthday reminder <http://cweiske.de/birthday3.htm>` files (``.bdf``)
+- `Birthday reminder <http://cweiske.de/birthday3.htm>`_ files (``.bdf``)
 
 Output formats
 ==============
