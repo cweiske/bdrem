@@ -24,6 +24,7 @@ Output formats
 - ASCII table
 - HTML
 - Email (text + HTML parts)
+- iCalendar
 
 
 =====
@@ -78,6 +79,17 @@ If you only want an email if there is a birthday, use ``--stoponempty``::
     $ bdrem --renderer=mail --stoponempty
 
 Make sure your config file contains ``$mail_from`` and ``$mail_to`` settings.
+
+
+iCalendar
+=========
+Exporting birthday events into an ics file is easy::
+
+   $ bdrem --renderer=ical > birthdays.ics
+
+It is possible to access the calendar via HTTP, too::
+
+    http://example.org/bdrem/?renderer=ical
 
 
 HTML page
