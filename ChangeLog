@@ -1,3 +1,8 @@
+2015-03-18  Christian Weiske  <cweiske@cweiske.de>
+
+	* New source: CSV file
+	* Version 0.6.0
+
 2014-03-21  Christian Weiske  <cweiske@cweiske.de>
 
 	* Source: SQL database
