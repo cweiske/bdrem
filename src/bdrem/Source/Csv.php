@@ -109,6 +109,7 @@ class Source_Csv
         }
 
         $first = true;
+        $arEvents = array();
         while (($row = fgetcsv($handle, 1000, $this->separator)) !== false) {
             if ($first && $this->firstLineIsHeader) {
                 $first = false;
@@ -118,9 +119,15 @@ class Source_Csv
             if ($this->columns['event'] === false) {
                 $eventType = $this->defaultEvent;
             } else {
+                if (!isset($row[$this->columns['event']])) {
+                    throw new \Exception('Event column does not exist in CSV');
+                }
                 $eventType = $row[$this->columns['event']];
             }
 
+            if (!isset($row[$this->columns['date']])) {
+                throw new \Exception('Date column does not exist in CSV');
+            }
             if ($row[$this->columns['date']] == '') {
                 continue;
             }
@@ -131,6 +138,10 @@ class Source_Csv
                     explode('.', $row[$this->columns['date']])
                 )
             );
+
+            if (!isset($row[$this->columns['name']])) {
+                throw new \Exception('Name column does not exist in CSV');
+            }
 
             $event = new Event(
                 (string) $row[$this->columns['name']],
