@@ -78,7 +78,7 @@ abstract class UserInterface
     {
         $parser = new \Console_CommandLine();
         $parser->description = 'Birthday reminder';
-        $parser->version = '0.1.0';
+        $parser->version = '0.6.0';
 
         $parser->addOption(
             'daysNext',
