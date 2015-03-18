@@ -45,15 +45,15 @@ abstract class UserInterface
             $res = $this->parseParameters($parser);
 
             $this->config->load();
+            setlocale(LC_TIME, $this->config->locale);
+            $this->handleCommands($res);
+
             if (!$this->config->cfgFileExists) {
                 throw new \Exception(
                     "No config file found. Looked at the following places:\n"
                     . '- ' . implode("\n- ", $this->config->cfgFiles)
                 );
             }
-
-            setlocale(LC_TIME, $this->config->locale);
-            $this->handleCommands($res);
 
             $source = $this->config->loadSource();
             $arEvents = $source->getEvents(
