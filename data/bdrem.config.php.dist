@@ -2,6 +2,25 @@
 //source: birthday file
 $source = array('Bdf', '/path/to/birthday.bdf');
 
+//Source: CSV file (simple)
+$source = array('Csv', '/path/to/file.csv');
+
+//Source: CSV file (complex)
+$source = array(
+    'Csv',
+    array(
+        'filename' => '/path/to/file.csv',
+        'columns' => array(
+            'name'  => 0,
+            'event' => 1,
+            'date'  => 2
+        ),
+        'firstLineIsHeader' => true,
+        'defaultEvent' => 'Birthday',
+        'separator' => ',',
+    )
+);
+
 //Source: SQL database
 $source = array(
     'Sql',
