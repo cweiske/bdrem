@@ -19,6 +19,7 @@ Data sources
   - Multiple date fields per record supported.
 - An LDAP server
 - `Birthday reminder <http://cweiske.de/birthday3.htm>`_ files (``.bdf``)
+- CSV files
 
 Output formats
 ==============
@@ -131,6 +132,63 @@ Configure your source as follows::
 
 __ http://cweiske.de/birthday.htm 
 __ http://cweiske.de/birthday3.htm 
+
+
+CSV file
+========
+Comma separated value files can be used with bdrem.
+They should at least contain a column with the name, and one with the date.
+
+Simple configuration if you use the default settings::
+
+    $source = array(
+        'Csv',
+        '/path/to/file.csv'
+    );
+
+Complex configuration::
+
+    $source = array(
+        'Csv',
+        array(
+            'filename' => '/path/to/file.csv',
+            'columns' => array(
+                'name'  => 0,
+                'event' => 1,
+                'date'  => 2
+            ),
+            'firstLineIsHeader' => true,
+            'defaultEvent' => 'Birthday',
+            'separator' => ',',
+        )
+    );
+
+Configuration options
+---------------------
+``columns``
+  Determines the position of the name, event and date columns.
+  ``0`` is the first column.
+  You can use ``false`` to disable a column; helpful if there is no
+  ``event`` column.
+
+  Default:
+
+  ``array('name' => 0, 'event' => 1, 'date' => 2)``
+  
+``defaultEvent``
+  Text to use as event if there is no event column.
+
+  Defaults to ``Birthday``
+
+``firstLineIsHeader``
+  If the first line in the CSV is column header data
+
+  Defaults to ``true``
+
+``separator``
+  How columns are separated.
+
+  Defaults to ``,``
 
 
 LDAP server
