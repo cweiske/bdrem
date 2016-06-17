@@ -76,6 +76,7 @@ class Renderer_Html extends Renderer
 
         $tr = new Renderer_HtmlTable();
         $table = $tr->render($arEvents);
+        $css = static::getCss();
         $s = <<<HTM
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -84,7 +85,22 @@ class Renderer_Html extends Renderer
  <head>
   <title>bdrem</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-$links  <style type="text/css">
+$links  <style type="text/css">$css</style>
+ </head>
+ <body>
+$table
+ </body>
+</html>
+HTM;
+        return $s;
+    }
+
+    /**
+     * Get the CSS for the HTML table
+     */
+    public static function getCss()
+    {
+        return <<<CSS
 table {
     border: 1px solid black;
     border-collapse: collapse;
@@ -150,14 +166,7 @@ tr.d2 td.icon:before {
 tr.d3 td.icon:before {
     content: "\342\227\224"
 }
-  </style>
- </head>
- <body>
-$table
- </body>
-</html>
-HTM;
-        return $s;
+CSS;
     }
 }
 ?>
