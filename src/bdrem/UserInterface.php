@@ -149,6 +149,14 @@ abstract class UserInterface
                 'action'      => 'StoreString'
             )
         );
+        $parser->addOption(
+            'debug',
+            array(
+                'long_name'   => '--debug',
+                'description' => 'Development helper (mail)',
+                'action'      => 'StoreTrue'
+            )
+        );
 
         return $parser;
     }
@@ -171,6 +179,7 @@ abstract class UserInterface
 
             $this->config->daysNext    = $result->options['daysNext'];
             $this->config->daysPrev    = $result->options['daysPrev'];
+            $this->config->debug       = $result->options['debug'];
             $this->config->renderer    = $result->options['renderer'];
             $this->config->stopOnEmpty = $result->options['stopOnEmpty'];
             $this->config->setDate($result->options['date']);

@@ -75,11 +75,18 @@ class Renderer_Mail extends Renderer
         $hdrs = $mime->headers($hdrs);
         $textHeaders = '';
         foreach ($hdrs as $k => $v) {
-            $textHeaders .= $k . ':' . $v  . "\n";
+            $textHeaders .= $k . ': ' . $v  . "\n";
         }
 
-        foreach ((array) $this->config->get('mail_to') as $recipient) {
-            mail($recipient, $subject, $body, $textHeaders);
+        if (!$this->config->get('debug', false)) {
+            foreach ((array) $this->config->get('mail_to') as $recipient) {
+                mail($recipient, $subject, $body, $textHeaders);
+            }
+        } else {
+            echo "Subject: " . $subject . "\n";
+            echo $textHeaders;
+            echo "\n";
+            echo $body;
         }
     }
 

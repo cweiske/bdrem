@@ -45,6 +45,12 @@ class Config
     public $daysNext;
 
     /**
+     * Development helper
+     * @var boolean
+     */
+    public $debug;
+
+    /**
      * Locale to render the dates in, e.g. "de_DE.UTF-8"
      * @var string
      */
