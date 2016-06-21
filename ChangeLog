@@ -1,3 +1,9 @@
+2016-06-21  Christian Weiske  <cweiske@cweiske.de>
+
+	* Inline CSS for HTML mails improves compatibility with mail clients
+	* Dummy data set for testing
+	* Version 0.6.1
+
 2015-03-18  Christian Weiske  <cweiske@cweiske.de>
 
 	* New source: CSV file

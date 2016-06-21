@@ -17,7 +17,7 @@ Data sources
 - Any SQL database.
 
   - Multiple date fields per record supported.
-- An LDAP server
+- An LDAP server with ``evolutionPerson`` records
 - `Birthday reminder <http://cweiske.de/birthday3.htm>`_ files (``.bdf``)
 - CSV files
 
@@ -62,6 +62,8 @@ To find out about all supported command line options, use ``--help``::
       -e, --stoponempty                 Output nothing when list is empty
       -d date, --date=date              Date to show events for
       -c FILE, --config=FILE            Path to configuration file
+      --debug                           Development helper (mail)
+      --no-color                        Do not output ANSI color codes
       -h, --help                        show this help message and exit
       -v, --version                     show the program version and exit
     
