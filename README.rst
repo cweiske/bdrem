@@ -41,9 +41,9 @@ After configuration_, you can test and use *bdrem* via command line::
     -----------------------------------------------------------
     Days  Age  Name                  Event      Date        Day
     -----------------------------------------------------------
-       0   32  Foo Bar               Birthday   20.03.1982  Do 
-       1   33  Andrea Milestone      Birthday   21.03.1981  Fr 
-       7   32  Hugh Success          Birthday   27.03.1982  Do 
+       0   32  Foo Bar               Birthday   20.03.1982  Do
+       1   33  Andrea Milestone      Birthday   21.03.1981  Fr
+       7   32  Hugh Success          Birthday   27.03.1982  Do
       12       Welt                  Scherztag  01.04.????  Di
 
 Help
@@ -53,7 +53,7 @@ To find out about all supported command line options, use ``--help``::
     Usage:
       ./bin/bdrem.php [options]
       ./bin/bdrem.php [options] <command> [options]
-    
+
     Options:
       -n NUM, --next=NUM                Show NUM days after date
       -p NUM, --prev=NUM                Show NUM days before date
@@ -66,7 +66,7 @@ To find out about all supported command line options, use ``--help``::
       --no-color                        Do not output ANSI color codes
       -h, --help                        show this help message and exit
       -v, --version                     show the program version and exit
-    
+
     Commands:
       readme  Show README.rst file
       config  Extract configuration file
@@ -132,8 +132,8 @@ Configure your source as follows::
 
     $source = array('Bdf', '/path/to/birthday.bdf');
 
-__ http://cweiske.de/birthday.htm 
-__ http://cweiske.de/birthday3.htm 
+__ http://cweiske.de/birthday.htm
+__ http://cweiske.de/birthday3.htm
 
 
 CSV file
@@ -176,7 +176,7 @@ Configuration options
   Default:
 
   ``array('name' => 0, 'event' => 1, 'date' => 2)``
-  
+
 ``defaultEvent``
   Text to use as event if there is no event column.
 
@@ -277,6 +277,10 @@ Dependencies
 
 Note that the ``.phar`` file already includes all dependencies;
 you do not need to install anything.
+
+When running from a git checkout, install the dependencies with composer::
+
+  $ composer install
 
 
 =======

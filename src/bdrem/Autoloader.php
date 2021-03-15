@@ -52,6 +52,10 @@ class Autoloader
             get_include_path() . PATH_SEPARATOR . __DIR__ . '/../'
         );
         spl_autoload_register(array(new self(), 'load'));
+
+        if (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
+            require_once __DIR__ . '/../../vendor/autoload.php';
+        }
     }
 }
 ?>

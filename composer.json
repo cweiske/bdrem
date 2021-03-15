@@ -1,0 +1,9 @@
+{
+    "require": {
+        "pear/console_color2": "^0.1.2",
+        "pear/console_commandline": "^1.2",
+        "pear/console_table": "^1.3",
+        "pear/mail_mime": "^1.10",
+        "pear/net_ldap2": "^2.2"
+    }
+}
