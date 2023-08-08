@@ -74,7 +74,7 @@ abstract class Renderer
      */
     protected function getLocalDate($dateStr)
     {
-        if ($dateStr{0} != '?') {
+        if ($dateStr[0] != '?') {
             return strftime('%x', strtotime($dateStr));
         }
 
