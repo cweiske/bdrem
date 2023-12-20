@@ -20,6 +20,8 @@ Data sources
 - An LDAP server with ``evolutionPerson`` records
 - `Birthday reminder <http://cweiske.de/birthday3.htm>`_ files (``.bdf``)
 - CSV files
+- A directory of .vcf vCard files
+
 
 Output formats
 ==============
