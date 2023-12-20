@@ -1,57 +1,57 @@
 <?php
 //source: birthday file
-$source = array('Bdf', '/path/to/birthday.bdf');
+$source = ['Bdf', '/path/to/birthday.bdf'];
 
 //Source: CSV file (simple)
-$source = array('Csv', '/path/to/file.csv');
+$source = ['Csv', '/path/to/file.csv'];
 
 //Source: CSV file (complex)
-$source = array(
+$source = [
     'Csv',
-    array(
+    [
         'filename' => '/path/to/file.csv',
-        'columns' => array(
+        'columns' => [
             'name'  => 0,
             'event' => 1,
             'date'  => 2
-        ),
+        ],
         'firstLineIsHeader' => true,
         'defaultEvent' => 'Birthday',
         'separator' => ',',
-    )
-);
+    ]
+];
 
 //Source: SQL database
-$source = array(
+$source = [
     'Sql',
-    array(
+    [
         'dsn' => 'mysql:dbname=bdrem;host=127.0.0.1',
         'user' => 'FIXME',
         'password' => 'FIXME',
         'table' => 'contacts',
-        'fields' => array(
-            'date' => array(
+        'fields' => [
+            'date' => [
                 //column name => event title
                 'c_birthday' => 'Birthday'
-            ),
+            ],
             //column with name, or array with column names
-            'name' => array('c_name'),
+            'name' => ['c_name'],
             //sprintf-compatible name formatting instruction
             'nameFormat' => '%s',
-        )
-    )
-);
+        ]
+    ]
+];
 
 //Source: LDAP
-$source = array(
+$source = [
     'Ldap',
-    array(
+    [
         'host'   => 'ldap.example.org',
         'basedn' => 'ou=adressbuch,dc=example,dc=org',
         'binddn' => 'cn=FIXME,ou=users,dc=example,dc=org',
         'bindpw' => 'FIXME'
-    )
-);
+    ]
+];
 
 //Source: Directory of .vcf vCard files (2 subfolder levels supported)
 $source = [
@@ -68,5 +68,5 @@ $locale = 'de_DE.UTF-8';
 
 //email settings
 $mail_from = 'birthday@example.org';
-$mail_to = array('a@example.org', 'b@example.org');
+$mail_to = ['a@example.org', 'b@example.org'];
 ?>
