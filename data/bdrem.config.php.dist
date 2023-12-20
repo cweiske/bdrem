@@ -54,12 +54,7 @@ $source = [
 ];
 
 //Source: Directory of .vcf vCard files (2 subfolder levels supported)
-$source = [
-    'vCard',
-    [
-        'folder' => '/home/cweiske/dev/contacts-backup/contacts'
-    ]
-];
+$source = ['vCard', '/home/user/contacts/'];
 
 
 $daysPrev = 3;

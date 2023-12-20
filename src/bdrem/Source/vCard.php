@@ -37,8 +37,13 @@ class Source_vCard
     /**
      * Set the VCard folder path
      */
-    public function __construct(array $config)
+    public function __construct($config)
     {
+        if (is_string($config)) {
+            $config = array(
+                'folder' => $config
+            );
+        }
         $this->folder = $config['folder'];
         if (!is_dir($this->folder)) {
             throw new \Exception(
