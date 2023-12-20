@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="bdrem" default="phar" basedir=".">
 
- <property name="version"  value="0.6.1" />
+ <property name="version"  value="0.7.0" />
  <property name="pharfile" value="${phing.dir}/dist/${phing.project.name}-${version}.phar" />
  <property name="libdir" value="${phing.dir}/lib"/>
 
@@ -12,17 +12,27 @@
   <include name="src/**"/>
   <include name="www/**"/>
 
+  <include name="vendor/autoload.php"/>
+  <include name="vendor/composer/**"/>
+  <include name="vendor/pear/console_color2/Console/**"/>
+  <include name="vendor/pear/console_commandline/Console/**"/>
+  <include name="vendor/pear/console_getopt/Console/**"/>
+  <include name="vendor/pear/console_table/Table.php"/>
+  <include name="vendor/pear/mail_mime/Mail/**"/>
+  <include name="vendor/pear/net_ldap2/Net/**"/>
+  <include name="vendor/pear/pear-core-minimal/src/**"/>
+  <include name="vendor/pear/pear_exception/PEAR/Exception.php"/>
+  <include name="vendor/sabre/uri/lib/**"/>
+  <include name="vendor/sabre/vobject/lib/**"/>
+  <include name="vendor/sabre/xml/lib/**"/>
+
   <include name="README.rst"/>
 
   <exclude name="data/config.php"/>
-  <exclude name="bin/fetch-deps.php"/>
-  <exclude name="bin/makephar.php"/>
  </fileset>
 
 
- <typedef name="pearPackageFileSet" classname="phing.types.PearPackageFileSet" />
-
- <target name="phar" depends="collectdeps"
+ <target name="phar"
          description="Create zip file for release"
  >
   <!-- strip the shebang  -->
@@ -48,33 +58,6 @@
    <arg file="${pharfile}"/>
   </exec>
  </target>
-
-
- <target name="collectdeps" description="Copy package dependencies to lib/">
-  <delete dir="${libdir}"/>
-  <mkdir dir="${libdir}"/>
-
-  <pearPackageFileset id="dep-Console_Color2" package="pear.php.net/Console_Color2"/>
-  <pearPackageFileset id="dep-Console_CommandLine" package="pear.php.net/Console_CommandLine"/>
-  <pearPackageFileset id="dep-Console_Table" package="pear.php.net/Console_Table"/>
-  <pearPackageFileset id="dep-Mail_mime" package="pear.php.net/Mail_mime"/>
-  <pearPackageFileset id="dep-Net_LDAP2" package="pear.php.net/Net_LDAP2"/>
-  <pearPackageFileset id="dep-PEAR" package="pear.php.net/PEAR">
-   <include name="PEAR/Exception.php"/>
-   <include name="PEAR.php"/>
-   <include name="PEAR5.php"/>
-  </pearPackageFileset>
-
-  <copy todir="${libdir}">
-   <fileset refid="dep-Console_Color2"/>
-   <fileset refid="dep-Console_CommandLine"/>
-   <fileset refid="dep-Console_Table"/>
-   <fileset refid="dep-Mail_mime"/>
-   <fileset refid="dep-Net_LDAP2"/>
-   <fileset refid="dep-PEAR"/>
-  </copy>
- </target>
-
 
  <target name="docs" description="render documentation">
   <rst file="README.rst"/>
